@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+    <bean id="student1" class="com.atguigu.spring.pojo.Student">
+
+    </bean>
+    <bean id="student2" class="com.atguigu.spring.pojo.Student">
+        <property name="sid" value="123"></property>
+        <property name="sname">
+            <value><![CDATA[<王五>]]></value>
+        </property>
+        <property name="gender">
+            <null></null>
+        </property>
+        <property name="age" value="123"></property>
+
+    </bean>
+    <bean id="student3" class="com.atguigu.spring.pojo.Student">
+        <constructor-arg value="1001"></constructor-arg>
+        <constructor-arg value="李四"></constructor-arg>
+        <constructor-arg value="女"></constructor-arg>
+        <constructor-arg value="24" name="score"></constructor-arg>
+
+    </bean>
+    <bean id="student5" class="com.atguigu.spring.pojo.Student">
+        <property name="sid" value="1005"></property>
+        <property name="sname" value="赵六"></property>
+        <property name="age" value="26"></property>
+        <property name="gender" value="男"></property>
+        <property name="clazz" ref="clazz1"></property>
+    </bean>
+    <bean id="student6" class="com.atguigu.spring.pojo.Student">
+        <property name="sid" value="1005"></property>
+        <property name="sname" value="赵六"></property>
+        <property name="age" value="26"></property>
+        <property name="gender" value="男"></property>
+        <property name="clazz" ref="clazz1"></property>
+        <property name="clazz.cid" value="123"></property>
+        <property name="clazz.cname" value="555"></property>
+    </bean>
+
+    <bean id="student7" class="com.atguigu.spring.pojo.Student">
+        <property name="sid" value="1005"></property>
+        <property name="sname" value="赵六"></property>
+        <property name="age" value="26"></property>
+        <property name="gender" value="男"></property>
+        <property name="clazz" >
+            <bean id="clazzinner" class="com.atguigu.spring.pojo.Clazz">
+                <property name="cid" value="777"></property>
+                <property name="cname" value="7"></property>
+            </bean>
+        </property>
+    </bean>
+    <bean id="clazz2" class="com.atguigu.spring.pojo.Clazz">
+        <property name="cname" value="大班"></property>
+        <property name="cid" value="186"></property>
+        <property name="students" ref="studentlist"></property>
+    </bean>
+<util:list id="studentlist">
+    <ref bean="student1"></ref>
+    <ref bean="student2"></ref>
+    <ref bean="student3"></ref>
+    <ref bean="student7"></ref>
+</util:list>
+    <bean id="clazz1" class="com.atguigu.spring.pojo.Clazz">
+        <property name="cid" value="11"></property>
+        <property name="cname" value="二班"></property>
+    </bean>
+    <bean id="student8" class="com.atguigu.spring.pojo.Student"
+          p:age="18" p:sid="123" p:clazz-ref="clazz1">
+
+    </bean>
+</beans>

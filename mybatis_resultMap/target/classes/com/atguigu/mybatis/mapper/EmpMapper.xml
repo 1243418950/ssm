@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mybatis.mapper.EmpMapper">
+    <!--mapper接口的全类名和namespace保持一致，接口中的int insertUser();接口名与方法名保持一致-->
+<resultMap id="empResultMap" type="emp">
+    <id column="emp_id" property="empId"></id>
+    <result column="emp_name" property="empName"></result>
+    <result column="age" property="age"></result>
+    <result column="gender" property="gender"></result>
+</resultMap>
+    <resultMap id="getEmpAndDeptByEmpId" type="emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <!--<result column="dept_id" property="dept.deptId"></result>
+        <result column="dept_name" property="dept.deptName"></result>-->
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+    <resultMap id="getEmpAndDeptByStepOne" type="emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <association property="dept" fetchType="lazy"
+                     select="com.atguigu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
+                     column="dept_id"></association>
+    </resultMap>
+<select id="getEmpByIdOld" resultType="emp">
+<!--如何处理字段名不一致？
+1、select时设置别名
+2、当字段名分别符合各自规则，Mysql使用_,java使用驼峰
+此时可以再mybatis的核心配置文件中设置一个全局配置，可以自动将下划线映射为驼峰
+-->
+    select * from t_emp where emp_id=#{empId}
+</select>
+    <select id="getEmpById" resultMap="empResultMap">
+        <!--如何处理字段名不一致？
+        1、select时设置别名
+        2、当字段名分别符合各自规则，Mysql使用_,java使用驼峰
+        此时可以再mybatis的核心配置文件中设置一个全局配置，可以自动将下划线映射为驼峰
+        -->
+        select * from t_emp where emp_id=#{empId}
+    </select>
+    <select id="getEmpAndDeptByEmpId" resultMap="getEmpAndDeptByEmpId">
+        SELECT * FROM t_emp LEFT JOIN t_dept ON t_emp.dept_id=t_dept.dept_id WHERE t_emp.dept_id=#{empId}
+    </select>
+    <select id="getEmpAndDeptByStepOne" resultMap="getEmpAndDeptByStepOne">
+        select * from t_emp where emp_id=#{empId}
+    </select>
+</mapper> 
