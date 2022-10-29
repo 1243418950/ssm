@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="spring_helloworld" />
         <module name="mybatis_resultMap" />
+        <module name="spring_mvc_hello" />
         <module name="spring-transaction" />
         <module name="helloword" />
         <module name="mybatis_parameter" />
@@ -20,5 +21,8 @@
         <module name="spring_aop" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="spring_mvc_helloworld" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
